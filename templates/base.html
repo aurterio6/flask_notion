@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 色変更に使うライブラリで用意されているCSSを導入 https://github.com/bebraw/colorjoe -->
+    <link rel="stylesheet" href="../static/css/colorjoe.css">
+    <link rel="stylesheet" href="../static/css/header.module.css">
+    <link rel="stylesheet" href="../static/css/footer.module.css">
+    <link rel="stylesheet" href="../static/css/shared.module.css">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <title>my-lifelog</title>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <header class="header">
+        <h1>
+            <a href="/">my-lifelog</a>
+        </h1>
+        <ul>
+            {% for label in labellist %}
+            <li>
+              <a href={{labellist[label]}}>{{label}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </header>
+    {% block body %}{% endblock %}
+    <footer class="footer">
+        <div>
+          <span>ゆったり見てね </span>
+        </div>
+    </footer>
+</body>
+
+</html>

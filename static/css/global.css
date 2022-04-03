@@ -1,0 +1,317 @@
+:root {
+  --gap-quarter: 0.25rem;
+  --gap-half: 0.5rem;
+  --gap: 1rem;
+  --gap-double: 2rem;
+
+  --bg: #fff;
+  --fg: #333;
+  --accents-1: #0070f3;
+  --accents-2: #3291ff;
+  --accents-3: #666;
+  --geist-foreground: #000;
+
+  --radius: 4px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  --font-mono: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Segoe UI,
+    Hiragino Kaku Gothic ProN, Hiragino Sans, ヒラギノ角ゴ ProN W3, Arial,
+    メイリオ, Meiryo, sans-serif;
+  /*-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  */
+
+  /*background-image: radial-gradient(#ddd 1px, transparent 1px),
+    radial-gradient(#ddd 1px, transparent 1px);*/
+  background-position: 0 0, 25px 25px;
+  background-attachment: fixed;
+  background-size: 50px 50px;
+
+  /* Hack */
+  overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  color: #000;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  font-size: 0.95rem;
+  line-height: 1.4rem;
+  tab-size: 4;
+  hyphens: none;
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #999;
+}
+.token.namespace {
+  opacity: 0.7;
+}
+.token.string,
+.token.attr-value {
+  color: #028265;
+}
+.token.punctuation,
+.token.operator {
+  color: #000;
+}
+.token.url,
+.token.symbol,
+.token.boolean,
+.token.variable,
+.token.constant {
+  color: #36acaa;
+}
+.token.atrule,
+.language-autohotkey .token.selector,
+.language-json .token.boolean,
+code[class*='language-css'] {
+  font-weight: 600;
+}
+.language-json .token.boolean {
+  color: var(--geist-success);
+}
+.token.keyword {
+  color: #ff0078;
+  font-weight: bolder;
+}
+.token.function,
+.token.tag,
+.token.class-name,
+.token.number,
+.token.tag .token.punctuation {
+  color: var(--geist-success);
+}
+.language-autohotkey .token.tag {
+  color: #9a050f;
+}
+.token.selector,
+.language-autohotkey .token.keyword {
+  color: #00009f;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.deleted {
+  color: red;
+  font-weight: bolder;
+}
+.token.inserted {
+  color: var(--geist-success);
+  font-weight: bolder;
+}
+.language-json .token.property,
+.language-markdown .token.title {
+  color: #000;
+  font-weight: bolder;
+}
+.language-markdown .token.code {
+  color: var(--geist-success);
+  font-weight: normal;
+}
+.language-markdown .token.list,
+.language-markdown .token.hr {
+  color: #999;
+}
+.language-markdown .token.url {
+  color: #ff0078;
+  font-weight: bolder;
+}
+.token.selector {
+  color: #2b91af;
+}
+.token.property,
+.token.entity {
+  color: #f00;
+}
+.token.attr-name,
+.token.regex {
+  color: #d9931e;
+}
+.token.directive.tag .tag {
+  background: #ff0;
+  color: #393a34;
+}
+/* dark */
+pre.dark[class*='language-'] {
+  color: #fafbfc;
+}
+.language-json .dark .token.boolean {
+  color: var(--geist-success);
+}
+.dark .token.string {
+  color: #50e3c2;
+}
+.dark .token.function,
+.dark .token.tag,
+.dark .token.class-name,
+.dark .token.number {
+  color: #2ba8ff;
+}
+.dark .token.attr-value,
+.dark .token.punctuation,
+.dark .token.operator {
+  color: #efefef;
+}
+.dark .token.attr-name,
+.dark .token.regex {
+  color: #fac863;
+}
+.language-json .dark .token.property,
+.language-markdown .dark .token.title {
+  color: #fff;
+}
+.language-markdown .dark .token.code {
+  color: #50e3c2;
+}
+
+figure {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #999;
+  line-height: 1.8rem;
+}
+
+a {
+  color: var(--accents-1);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accents-2);
+}
+
+mark {
+  padding: var(--gap-quarter);
+  border-radius: var(--radius);
+  background: rgba(247, 212, 255, 0.8);
+}
+
+h1 {
+  margin: 0;
+  color: var(--fg);
+  font-size: 2rem;
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+}
+
+h2 {
+  margin: 0;
+  color: var(--fg);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  h2 {
+    font-size: 1.15rem;
+  }
+}
+
+h3 {
+  margin: 0;
+  color: var(--fg);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  h3 {
+    font-size: 1.15rem;
+  }
+}
+
+ol {
+  color: #222;
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.8rem;
+}
+p,
+ul {
+  color: #222;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.8rem;
+}
+pre {
+  margin: 0;
+  white-space: pre;
+  tab-size: 2;
+}
+pre :global(code) {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  margin: 0.3rem 0;
+  background-color: #333;
+}
+
+code {
+  font-size: 0.9rem;
+  background: #f1f1f1;
+  padding: 0.25rem;
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+}
+
+table {
+  color: #222;
+  border-collapse: collapse;
+}
+
+table tr {
+  vertical-align: middle;
+}
+
+table th {
+  font-weight: 600;
+  background-color: #f4f4f4;
+}
+
+table td,
+table th {
+  font-size: 0.9rem;
+  border: 1px solid #e4e4e4;
+  padding: 0.5rem 1rem;
+  line-height: 1.2rem;
+}

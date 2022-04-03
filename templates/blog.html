@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog.module.css') }}">
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="mainContent">
+        {% if tagname!=0 %}
+            <h1>{{tagname}}の記事一覧</h1>
+        {% endif %}
+        {% for post in posts %}
+            <div class="post">
+            <div class="postDate">
+                投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
+            </div>
+            <div class="postDate">tags:
+            {% for tag in post["Tags"] %}
+            <a href="/tag/{{tag}}">{{tag}}</a>
+            {% endfor %}
+            </div>
+            <h3 class="postTitle">
+                <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
+            </h3>
+            <div class="postExcerpt">
+                <p>{{post["Excerpt"]}}</p>
+            </div>
+            </div>
+        {% endfor %}
+        <footer>
+            <NextPageLink firstPost={firstPost} posts={posts} />
+        </footer>
+    </div>
+
+    <div class="subContent">
+        <div class="blogTagLink">
+            <h3>Categories</h3>
+            {% for tag in tags %}
+                <li key={{tag}}>
+                    <a href="/tag/{{tag}}">{{tag}}</a>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

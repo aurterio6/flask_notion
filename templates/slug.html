@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog.module.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notion-block.module.css') }}">
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="mainContent">
+        <div class="post">
+            <div class="postDate">
+                投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
+            </div>
+            <div class="postDate">tags:
+            {% for tag in post["Tags"] %}
+                <a href="/tag/{{tag}}">{{tag}}</a>
+            {% endfor %}
+            </div>
+            <h3 class="postTitle">
+                <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
+            </h3>
+            <div class="postBody">
+                {% for block in blocks %}
+                    {% if block["Type"] =="paragraph" %}
+                        <p>{{block["RichTexts"]["text"][0]["plain_text"]}}</p>                                       
+                    {% elif block["Type"] =="heading_1" %}
+                        <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
+                            <h4>{{block["RichTexts"]["text"][0]["plain_text"]}}</h4>
+                        </a>
+                    {% elif block["Type"] =="heading_2" %}
+                        <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
+                            <h5>{{block["RichTexts"]["text"][0]["plain_text"]}}</h5>
+                        </a>
+                    {% elif block["Type"] =="heading_3" %}
+                        <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
+                            <h6>{{block["RichTexts"]["text"][0]["plain_text"]}}</h6>
+                        </a>
+                    {% elif block["Type"] =="bulleted_list_item" %}
+                        <li>    
+                            {{block["RichTexts"]["text"][0]["plain_text"]}}
+                        </li>
+                    {% elif block["Type"] =="numbered_list_item" %}
+                        <ol>    
+                            {{block["RichTexts"]["text"][0]["plain_text"]}}
+                        </ol>
+                    {% elif block["Type"]=="image" %}
+                        <figure class="image">
+                            <div>
+                            <img
+                                src={{block["Image"]}}
+                                alt="画像が読み込まれない場合はページを更新してみてください。"
+                            />
+                            </div>
+                        </figure>
+                    {% elif block["Type"]=="code" %}
+                        <div class="code">
+                            <pre>
+                                <code>{{block["Text"]["text"][0]["plain_text"]}}</code>
+                            </pre>
+                        </div>   
+                    {% elif block["Type"]=="quote" %}
+                        <blockquote>
+                            <p> {{block["Quote"]["text"][0]["plain_text"]}} </p>
+                        </blockquote>    
+                    {% elif block["Type"]=="callout" %}
+                        <div class="callout">
+                            <div>{{block["Icon"]}}</div>
+                            <div>
+                                <p> {{block["RichTexts"]["text"][0]["plain_text"]}} </p>
+                            </div>
+                        </div>
+                    {% elif block["Type"]=="embed" %}
+                        <div>
+                            <a href={{block["Embed"]}} >埋め込みは未実装</a>
+                        </div>
+                    {% elif block["Type"]=="bookmark" %}
+                        <div>
+                            <a href={{block["bookmark"]}} >埋め込みは未実装</a>
+                        </div>
+                    {% elif block["Type"]=="link_preview" %}
+                        <div>
+                            <a href={{block["link_preview"]}} >埋め込みは未実装</a>
+                        </div>
+                    {% elif block["Type"]=="table" %}
+                        <table>
+                            <tbody>
+                                <tr>
+                                    テーブルは未実装 
+                                </tr>
+                            </tbody>
+                        </table>
+                    {% elif block["Type"]=="divider" %}
+                        <hr class="divider" />                                                                                                         
+                    {% else %}
+                        <p>未対応の書式での記述、反映されるように頑張ります</p>
+                    {% endif %}
+                {% endfor %}
+            </div>  
+        </div>
+    </div>
+
+    <div class="subContent">
+        <div class="blogTagLink">
+            <h3>Posts in the same category</h3>
+            {% if not post["Tags"] %}
+                <div class="noContents">There are no contents yet</div>
+            {% else %}
+                {% for tag in post["Tags"] %}
+                    <li key={{tag}}>
+                        <a href="/tag/{{tag}}">{{tag}}</a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+    </div>
+    <div class="subContent">
+        <div class="blogTagLink">
+            <h3>Categories</h3>
+            {% for tag in tags %}
+                <li key={{tag}}>
+                    <a href="/tag/{{tag}}">{{tag}}</a>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+  {% endblock %}
