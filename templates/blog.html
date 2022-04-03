@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.module.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog-parts.module.css') }}">
 {% endblock %}
 {% block body %}
 
@@ -11,25 +12,24 @@
         {% endif %}
         {% for post in posts %}
             <div class="post">
-            <div class="postDate">
-                投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
-            </div>
-            <div class="postDate">tags:
-            {% for tag in post["Tags"] %}
-            <a href="/tag/{{tag}}">{{tag}}</a>
-            {% endfor %}
-            </div>
-            <h3 class="postTitle">
-                <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
-            </h3>
-            <div class="postExcerpt">
-                <p>{{post["Excerpt"]}}</p>
-            </div>
+                <div class="card">
+                    <div class="postDate">
+                        投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
+                    </div>
+                    <div class="postDate">tags:
+                    {% for tag in post["Tags"] %}
+                    <a href="/tag/{{tag}}">{{tag}}</a>
+                    {% endfor %}
+                    </div>
+                    <h3 class="postTitle">
+                        <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
+                    </h3>
+                    <div class="postExcerpt">
+                        <p>{{post["Excerpt"]}}</p>
+                    </div>
+                </div>
             </div>
         {% endfor %}
-        <footer>
-            <NextPageLink firstPost={firstPost} posts={posts} />
-        </footer>
     </div>
 
     <div class="subContent">

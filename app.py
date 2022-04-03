@@ -34,7 +34,7 @@ for i in range(len(db["results"])):
         "Title": prop["Page"]["title"][0]["plain_text"],
         "Slug": prop["Slug"]["rich_text"][0]["plain_text"],
         "Date": prop["Date"]["date"]["start"],
-        "LastEditedTime": db["results"][i]["last_edited_time"],
+        "LastEditedTime": db["results"][i]["last_edited_time"][:10],
         "Tags": list(map(lambda x:x["name"] ,prop["Tags"]["multi_select"])),
         "Excerpt":excerpt[0]["plain_text"] if len(excerpt)> 0 else "",
         "OGImage":ogimege[0]["file"]["url"] if len(ogimege)> 0 else None,

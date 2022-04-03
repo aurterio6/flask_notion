@@ -9,7 +9,7 @@
 }
 
 .mainContent {
-  width: 60%;
+  width: 75%;
 }
 @media (max-width: 600px) {
   .mainContent {
@@ -32,7 +32,7 @@
 }
 
 .subContent {
-  width: 35%;
+  width: 20%;
 }
 @media (max-width: 600px) {
   .subContent {
@@ -40,58 +40,69 @@
   }
 }
 
+.card{
+  height: 200px;  /*高さ*/
+  width: 80%;  /*幅*/
+  color: #474747;
+  background: whitesmoke;
+  border-left: double 7px #4ec4d3;
+  border-right: double 7px #4ec4d3;
+  margin:auto;
+}
+
 .post {
   margin: 0 auto 40px;
 }
-.post :global(h3) {
+
+.post h3 {
   margin: 0;
   color: var(--fg);
 }
-.post :global(h4) {
+.post h4 {
   margin: 1.8rem 0 0.8rem;
   color: var(--fg);
   font-size: 1.2rem;
 }
-.post :global(h4):after {
+.post h4:after {
   color: var(--accents-1);
   font-size: 0.9rem;
   content: '▼';
   padding-left: 0.2rem;
 }
-.post :global(h5) {
+.post h5 {
   margin: 1.8rem 0 0.8rem;
   color: var(--fg);
   font-size: 1.1rem;
 }
-.post :global(h5):after {
+.post h5:after {
   color: var(--accents-1);
   font-size: 0.9rem;
   content: '▼';
   padding-left: 0.2rem;
 }
-.post :global(h6) {
+.post h6 {
   margin: 1.8rem 0 0.8rem;
   color: var(--fg);
   font-size: 1rem;
 }
-.post :global(h6):after {
+.post h6:after {
   color: var(--accents-1);
   font-size: 0.9rem;
   content: '▼';
   padding-left: 0.2rem;
 }
-.post :global(p) {
+.post p {
   margin: 0.3rem 0;
   color: var(--fg);
   font-size: 1rem;
   min-height: 1.8rem;
 }
-.post :global(video),
-.post :global(img) {
+.post video,
+.post img {
   max-width: 100%;
   display: inline-block;
 }
-.post :global(blockquote) {
+.post blockquote {
   margin: 0.6rem 0;
   padding: 0 0.9rem;
   border-left: 3px solid var(--fg);

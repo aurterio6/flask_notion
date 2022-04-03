@@ -2,23 +2,29 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/notion-block.module.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog-parts.module.css') }}">
 {% endblock %}
 {% block body %}
 
 <div class="container">
     <div class="mainContent">
         <div class="post">
-            <div class="postDate">
-                投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
-            </div>
-            <div class="postDate">tags:
-            {% for tag in post["Tags"] %}
-                <a href="/tag/{{tag}}">{{tag}}</a>
-            {% endfor %}
-            </div>
-            <h3 class="postTitle">
-                <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
-            </h3>
+            <div class="card">
+                <div class="postDate">
+                    投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
+                </div>
+                <div class="postDate">tags:
+                {% for tag in post["Tags"] %}
+                    <a href="/tag/{{tag}}">{{tag}}</a>
+                {% endfor %}
+                </div>
+                <h3 class="postTitle">
+                    <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
+                </h3>
+                <div class="postExcerpt">
+                    <p>{{post["Excerpt"]}}</p>
+                </div>
+            </div> 
             <div class="postBody">
                 {% for block in blocks %}
                     {% if block["Type"] =="paragraph" %}
@@ -78,7 +84,7 @@
                             <a href={{block["bookmark"]}} >埋め込みは未実装</a>
                         </div>
                     {% elif block["Type"]=="link_preview" %}
-                        <div>
+                        <div class="linkPreview">
                             <a href={{block["link_preview"]}} >埋め込みは未実装</a>
                         </div>
                     {% elif block["Type"]=="table" %}
@@ -111,8 +117,7 @@
                     </li>
                 {% endfor %}
             {% endif %}
-    </div>
-    <div class="subContent">
+        </div>
         <div class="blogTagLink">
             <h3>Categories</h3>
             {% for tag in tags %}

@@ -11,8 +11,10 @@
 }
 
 .postTitle {
+  padding: 20px 0 0;
   font-size: 1.6rem;
   color: var(--fg);
+  text-align:center;
 }
 @media (max-width: 600px) {
   .postTitle {
@@ -21,7 +23,8 @@
 }
 .postTitle a {
   font-size: 1.2rem;
-  color: inherit;
+  color: #4ec4d3;
+  text-decoration:underline;
 }
 @media (max-width: 600px) {
   .postTitle a {
@@ -32,10 +35,13 @@
 .postExcerpt {
   padding: 0.4rem 0;
   font-size: 1rem;
+  text-align:center;
 }
 
 .postBody {
   padding: 0.5rem 0;
+  width: 80%;
+  margin:auto;
 }
 
 .readMoreLink {

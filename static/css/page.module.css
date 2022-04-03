@@ -4,7 +4,8 @@
 }
 
 .container > div {
-  margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 20%;
 }
 .container div:last-child {
   margin-bottom: 0;
@@ -19,4 +20,18 @@
 .container p {
   margin: 0.3rem auto;
   line-height: 2rem;
+}
+.drag-and-drop{
+  height: 100px;  /*高さ*/
+  width: 100px;  /*幅*/
+  color: #474747;
+  background: whitesmoke;
+  border-left: double 7px #4ec4d3;
+  border-right: double 7px #4ec4d3;
+  cursor: move;
+  position: absolute;
+  z-index: 1000;
+}
+.drag {
+  z-index: 1001;
 }
