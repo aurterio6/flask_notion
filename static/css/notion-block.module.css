@@ -96,3 +96,22 @@
 .tweetEmbed div:first-child div:first-child {
   margin: auto;
 }
+
+a.link-preview {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  display: inline-block;
+  border:  7px dotted #4ec4d3;
+  padding: 5px;
+}
+a.link-preview .link-area {
+  width: 100%;          /*  make text wrap under image  */
+}
+a.link-preview .link-area .og-title {
+  font-size: 1rem;
+}
+a.link-preview .link-area .og-description {
+  font-size: 0.7rem;
+  color:black
+}

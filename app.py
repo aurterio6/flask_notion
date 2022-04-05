@@ -29,22 +29,86 @@ for i in range(len(db["results"])):
     prop=db["results"][i]["properties"]
     excerpt=prop["Excerpt"]["rich_text"]
     ogimege=prop["OGImage"]["files"]
-    post = {
-        "PageId": db["results"][i]["id"],
-        "Title": prop["Page"]["title"][0]["plain_text"],
-        "Slug": prop["Slug"]["rich_text"][0]["plain_text"],
-        "Date": prop["Date"]["date"]["start"],
-        "LastEditedTime": db["results"][i]["last_edited_time"][:10],
-        "Tags": list(map(lambda x:x["name"] ,prop["Tags"]["multi_select"])),
-        "Excerpt":excerpt[0]["plain_text"] if len(excerpt)> 0 else "",
-        "OGImage":ogimege[0]["file"]["url"] if len(ogimege)> 0 else None,
-        "Rank": prop["Rank"]["number"]}
-    tags.extend(post["Tags"])
-    posts.append(post)
+    if prop["Published"]["checkbox"]:
+        post = {
+            "PageId": db["results"][i]["id"],
+            "Title": prop["Page"]["title"][0]["plain_text"],
+            "Slug": prop["Slug"]["rich_text"][0]["plain_text"],
+            "Date": prop["Date"]["date"]["start"],
+            "LastEditedTime": db["results"][i]["last_edited_time"][:10],
+            "Tags": list(map(lambda x:x["name"] ,prop["Tags"]["multi_select"])),
+            "Excerpt":excerpt[0]["plain_text"] if len(excerpt)> 0 else "",
+            "OGImage":ogimege[0]["file"]["url"] if len(ogimege)> 0 else None,
+            "Rank": prop["Rank"]["number"]}
+        tags.extend(post["Tags"])
+        posts.append(post)
 tags_set=list(set(tags))
 
 
 # In[2]:
+
+
+import requests
+from bs4 import BeautifulSoup
+
+
+headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '3600',
+    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
+    }
+def get_title(html):
+    """Scrape page title."""
+    title = None
+    if type(html.title)==str:
+        title = html.title.string
+    elif html.find("meta", property="og:title"):
+        title = html.find("meta", property="og:title").get('content')
+    elif html.find("meta", property="twitter:title"):
+        title = html.find("meta", property="twitter:title").get('content')
+    elif html.find("h1"):
+        title = html.find("h1").string
+    return title
+
+
+def get_description(html):
+    """Scrape page description."""
+    description = None
+    if html.find("meta", property="description"):
+        description = html.find("meta", property="description").get('content')
+    elif html.find("meta", property="og:description"):
+        description = html.find("meta", property="og:description").get('content')
+    elif html.find("meta", property="twitter:description"):
+        description = html.find("meta", property="twitter:description").get('content')
+    elif html.find("p"):
+        description = html.find("p").contents
+    return description
+
+
+def get_image(html):
+    """Scrape share image."""
+    image = None
+    if html.find("meta", property="image"):
+        image = html.find("meta", property="image").get('content')
+    elif html.find("meta", property="og:image"):
+        image = html.find("meta", property="og:image").get('content')
+    elif html.find("meta", property="twitter:image"):
+        image = html.find("meta", property="twitter:image").get('content')
+    elif html.find("img", src=True):
+        image = html.find("img").get('src')
+    return image
+
+def generate_preview(url):
+    req = requests.get(url, headers)
+    html = BeautifulSoup(req.content, 'html.parser')
+    meta_data = {
+       'title': get_title(html),
+       'description': get_description(html),
+       'image': get_image(html),
+    }
+    return meta_data
 
 
 def make_page(p):
@@ -105,26 +169,14 @@ def make_page(p):
                 "RichTexts": item[i][item_type],
                 "Icon": item[i][item_type]["icon"]["emoji"],
             }
-        elif item_type == "embed":
+
+        elif item_type in ["link_preview","bookmark","embed"]:
             block = {
                 "Id": item[i]["id"],
                 "Type": item_type,
                 "HasChildren": item[i]["has_children"],
-                "Embed": item[i][item_type]["url"],
-            }
-        elif item_type == "bookmark":
-            block = {
-                "Id": item[i]["id"],
-                "Type": item_type,
-                "HasChildren": item[i]["has_children"],
-                "Bookmark": item[i][item_type]["url"],
-            }
-        elif item_type == "link_preview":
-            block = {
-                "Id": item[i]["id"],
-                "Type": item_type,
-                "HasChildren": item[i]["has_children"],
-                "LinkPreview": item[i][item_type]["url"],
+                "Url":item[i][item_type]["url"],
+                "LinkPreview": generate_preview(item[i][item_type]["url"]),
             }
         elif item_type == "table":
             block = {

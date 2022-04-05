@@ -28,18 +28,34 @@
             <div class="postBody">
                 {% for block in blocks %}
                     {% if block["Type"] =="paragraph" %}
-                        <p>{{block["RichTexts"]["text"][0]["plain_text"]}}</p>                                       
+                        <p>
+                        {% for text in block["RichTexts"]["text"] %}
+                            {{text["plain_text"]}}
+                        {% endfor %}
+                        </p>                                       
                     {% elif block["Type"] =="heading_1" %}
                         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-                            <h4>{{block["RichTexts"]["text"][0]["plain_text"]}}</h4>
+                            <h4>
+                            {% for text in block["RichTexts"]["text"] %}
+                                {{text["plain_text"]}}
+                            {% endfor %}
+                            </h4>
                         </a>
                     {% elif block["Type"] =="heading_2" %}
                         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-                            <h5>{{block["RichTexts"]["text"][0]["plain_text"]}}</h5>
+                            <h5>                            
+                            {% for text in block["RichTexts"]["text"] %}
+                                {{text["plain_text"]}}
+                            {% endfor %}
+                            </h5>
                         </a>
                     {% elif block["Type"] =="heading_3" %}
                         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-                            <h6>{{block["RichTexts"]["text"][0]["plain_text"]}}</h6>
+                            <h6>                            
+                            {% for text in block["RichTexts"]["text"] %}
+                                {{text["plain_text"]}}
+                            {% endfor %}
+                            </h6>
                         </a>
                     {% elif block["Type"] =="bulleted_list_item" %}
                         <li>    
@@ -61,7 +77,9 @@
                     {% elif block["Type"]=="code" %}
                         <div class="code">
                             <pre>
-                                <code>{{block["Text"]["text"][0]["plain_text"]}}</code>
+                                <code>
+                                    <p>{{block["Text"]["text"][0]["plain_text"]}}</p>
+                                </code>
                             </pre>
                         </div>   
                     {% elif block["Type"]=="quote" %}
@@ -75,18 +93,22 @@
                                 <p> {{block["RichTexts"]["text"][0]["plain_text"]}} </p>
                             </div>
                         </div>
-                    {% elif block["Type"]=="embed" %}
-                        <div>
-                            <a href={{block["Embed"]}} >埋め込みは未実装</a>
-                        </div>
-                    {% elif block["Type"]=="bookmark" %}
-                        <div>
-                            <a href={{block["bookmark"]}} >埋め込みは未実装</a>
-                        </div>
-                    {% elif block["Type"]=="link_preview" %}
-                        <div class="linkPreview">
-                            <a href={{block["link_preview"]}} >埋め込みは未実装</a>
-                        </div>
+                    {% elif block["Type"] in ["link_preview","bookmark","embed"] %}
+                        <a href="{{block["Url"]}}" class="link-preview" target="_blank" rel="nofollow">
+                            <div class="link-area">
+                              <div class="og-image">
+                                  <img src={{block["LinkPreview"]["image"]}}>
+                              </div>
+                              <div class="descriptions">
+                                <div class="og-title">
+                                    {{block["LinkPreview"]["title"]}}
+                                </div>
+                                <div class="og-description">
+                                    {{block["LinkPreview"]["description"]}}
+                                </div>
+                              </div>
+                            </div>
+                          </a>
                     {% elif block["Type"]=="table" %}
                         <table>
                             <tbody>
