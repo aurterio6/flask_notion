@@ -8,8 +8,6 @@
     <meta name="google-site-verification" content="23Gj-bA3W6CP5lwglHiwkbcTD9_eQNkPXiPmtRKCbag" />
     <!-- 色変更に使うライブラリで用意されているCSSを導入 https://github.com/bebraw/colorjoe -->
     <link rel="stylesheet" href="../static/css/colorjoe.css">
-    <link rel="stylesheet" href="../static/css/header.module.css">
-    <link rel="stylesheet" href="../static/css/footer.module.css">
     <link rel="stylesheet" href="../static/css/shared.module.css">
     <link rel="stylesheet" href="../static/css/global.css">
     <title>my-lifelog</title>
@@ -18,9 +16,11 @@
 
 <body class="all_container">
     <header class="header">
-        <h1>
-            <a href="/">my-lifelog</a>
-        </h1>
+        <div>
+            <h1>
+                <a href="/">my-lifelog</a>
+            </h1>
+        </div>
         <ul>
             {% for label in labellist %}
             <li>
@@ -33,6 +33,16 @@
     <footer class="footer">
         <div>
           <span>ゆったり見てね </span>
+        </div>
+        <div>
+        {% for label in labellist %}
+            <a href={{labellist[label]}}>・{{label}}　</a>
+        {% endfor %}
+        </div>
+        <div>
+            {% for tag in tags %}
+                <a href="/tag/{{tag}}">・{{tag}}　</a>
+            {% endfor %}
         </div>
     </footer>
 </body>

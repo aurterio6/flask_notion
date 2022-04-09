@@ -20,6 +20,10 @@
   padding: 0 0 20px;
   text-align: center;
 }
+.mainContent h1 {
+  padding-bottom: 5%;
+  text-align: center;
+}
 .mainContent footer {
   border-top: 1px dashed #888;
   margin: 0 auto;
@@ -41,6 +45,7 @@
 }
 
 .card{
+  padding: 10px 10px 0;
   height: 200px;  /*高さ*/
   width: 80%;  /*幅*/
   color: #474747;

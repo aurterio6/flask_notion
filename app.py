@@ -208,7 +208,7 @@ def make_page(p):
     return blocks
 
 
-# In[ ]:
+# In[8]:
 
 
 app = Flask(__name__)
@@ -218,7 +218,7 @@ labellist={ 'Home':'/','Blog':'/blog','Wishlist':'https://pushy-kitty-07b.notion
 # https://shigeblog221.com/python-flask4/
 @app.route("/")
 def index():
-    return render_template("index.html",labellist=labellist)
+    return render_template("index.html",labellist=labellist,tags=tags_set)
 
 @app.route("/blog", methods=["GET", "POST"])
 def blog():
