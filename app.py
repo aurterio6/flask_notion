@@ -208,19 +208,19 @@ def make_page(p):
     return blocks
 
 
-# In[8]:
+# In[ ]:
 
 
 app = Flask(__name__)
 app.secret_key = "tekitou"  # os.urandom(32)などが良い。が、herokuで安定しないとのコメントあり。
-labellist={ 'Home':'/','Blog':'/blog','Wishlist':'https://pushy-kitty-07b.notion.site/PC-3a8f8fc1fdb243649a2bbb1cbcb41f11',}
+labellist={ 'Home':'/top','Blog':'/','Wishlist':'https://pushy-kitty-07b.notion.site/PC-3a8f8fc1fdb243649a2bbb1cbcb41f11',}
 # 何も描かないとGETしか受け付けない。ブログならそれでOK
 # https://shigeblog221.com/python-flask4/
-@app.route("/")
+@app.route("/top")
 def index():
     return render_template("index.html",labellist=labellist,tags=tags_set)
 
-@app.route("/blog", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def blog():
     #if len(posts)>10:
         #post_list=posts[:10]
@@ -228,7 +228,7 @@ def blog():
         #post_list=posts
     return render_template("blog.html",labellist=labellist,posts=posts,tags=tags_set,tagname=0)
 
-@app.route("/blog/<Slug>", methods=["GET", "POST"])
+@app.route("/<Slug>", methods=["GET", "POST"])
 def page(Slug):
     for p in range(len(posts)):
         if posts[p]["Slug"]==Slug:
