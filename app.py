@@ -4,7 +4,7 @@
 # In[1]:
 
 
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for,send_from_directory
 import os
 from dotenv import load_dotenv
 from pprint import pprint
@@ -45,7 +45,7 @@ for i in range(len(db["results"])):
 tags_set=list(set(tags))
 
 
-# In[2]:
+# In[3]:
 
 
 import requests
@@ -207,11 +207,39 @@ def make_page(p):
         blocks.append(block)
     return blocks
 
+def makesitemap():
+    import xml.etree.ElementTree as ET
 
-# In[ ]:
+    urls = [
+        "https://flasknotionblog.herokuapp.com/",
+        "https://flasknotionblog.herokuapp.com/top"
+    ]
+    for p in range(len(posts)):
+        urls.append("https://flasknotionblog.herokuapp.com/"+posts[p]["Slug"])
+    urlset = ET.Element('urlset')
+    urlset.set("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9")
+    tree = ET.ElementTree(element=urlset)
+
+    for u in range(len(urls)):
+        url=urls[u]
+        url_element = ET.SubElement(urlset, 'url')
+        loc = ET.SubElement(url_element, 'loc')
+        loc.text = url
+        lastmod = ET.SubElement(url_element, 'lastmod')
+        if u<2:
+            lastmod.text = "2022-04-01"
+        else:
+            lastmod.text = posts[u-2]["LastEditedTime"]
 
 
-app = Flask(__name__)
+    tree.write('static/sitemap.xml', encoding='utf-8', xml_declaration=True)
+#makesitemap()
+
+
+# In[4]:
+
+
+app = Flask(__name__, static_folder='static')
 app.secret_key = "tekitou"  # os.urandom(32)などが良い。が、herokuで安定しないとのコメントあり。
 labellist={ 'Home':'/top','Blog':'/','Wishlist':'https://pushy-kitty-07b.notion.site/PC-3a8f8fc1fdb243649a2bbb1cbcb41f11',}
 # 何も描かないとGETしか受け付けない。ブログならそれでOK
@@ -246,6 +274,10 @@ def tagpage(Tag):
             tag_page.append(posts[p])
     return render_template("blog.html",labellist=labellist,posts=tag_page,tags=tags_set,tagname=Tag)
 
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 if __name__ == "__main__":
     app.run()

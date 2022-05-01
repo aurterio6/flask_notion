@@ -65,7 +65,6 @@ pre[class*='language-'] {
   font-size: 0.95rem;
   line-height: 1.4rem;
   tab-size: 4;
-  hyphens: none;
 }
 .token.comment,
 .token.prolog,
