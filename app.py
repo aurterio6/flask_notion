@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 from flask import Flask, render_template, request, redirect, session, url_for,send_from_directory
@@ -45,7 +45,7 @@ for i in range(len(db["results"])):
 tags_set=list(set(tags))
 
 
-# In[3]:
+# In[5]:
 
 
 import requests
@@ -231,7 +231,11 @@ def makesitemap():
         else:
             lastmod.text = posts[u-2]["LastEditedTime"]
 
-
+    path = './static/sitemap.txt'
+    f = open(path, 'w')
+    for url in urls:
+        f.write(url+"\n")
+    f.close()
     tree.write('static/sitemap.xml', encoding='utf-8', xml_declaration=True)
 #makesitemap()
 
@@ -276,6 +280,7 @@ def tagpage(Tag):
 
 @app.route('/robots.txt')
 @app.route('/sitemap.xml')
+@app.route('/sitemap.txt')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
