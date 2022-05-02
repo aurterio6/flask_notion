@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 from flask import Flask, render_template, request, redirect, session, url_for,send_from_directory
@@ -29,6 +29,8 @@ for i in range(len(db["results"])):
     prop=db["results"][i]["properties"]
     excerpt=prop["Excerpt"]["rich_text"]
     ogimege=prop["OGImage"]["files"]
+    if prop["Page"]["title"][0]["plain_text"]=="biography":
+        bio_id=db["results"][i]["id"]
     if prop["Published"]["checkbox"]:
         post = {
             "PageId": db["results"][i]["id"],
@@ -45,7 +47,7 @@ for i in range(len(db["results"])):
 tags_set=list(set(tags))
 
 
-# In[5]:
+# In[7]:
 
 
 import requests
@@ -112,7 +114,10 @@ def generate_preview(url):
 
 
 def make_page(p):
-    item = notion.blocks.children.list(block_id=posts[p]["PageId"])["results"]
+    if p=="bio":
+        item = notion.blocks.children.list(block_id=bio_id)["results"]
+    else:
+        item = notion.blocks.children.list(block_id=posts[p]["PageId"])["results"]
     blocks = []
     pprint(item)
     for i in range(len(item)):
@@ -240,7 +245,7 @@ def makesitemap():
 #makesitemap()
 
 
-# In[4]:
+# In[11]:
 
 
 app = Flask(__name__, static_folder='static')
@@ -258,7 +263,8 @@ def blog():
         #post_list=posts[:10]
     #else:
         #post_list=posts
-    return render_template("blog.html",labellist=labellist,posts=posts,tags=tags_set,tagname=0)
+    blocks=make_page("bio")
+    return render_template("blog.html",labellist=labellist,posts=posts,blocks=blocks,tags=tags_set,tagname=0)
 
 @app.route("/<Slug>", methods=["GET", "POST"])
 def page(Slug):
