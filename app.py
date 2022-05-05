@@ -47,7 +47,7 @@ for i in range(len(db["results"])):
 tags_set=list(set(tags))
 
 
-# In[7]:
+# In[2]:
 
 
 import requests
@@ -245,7 +245,7 @@ def makesitemap():
 #makesitemap()
 
 
-# In[11]:
+# In[ ]:
 
 
 app = Flask(__name__, static_folder='static')
@@ -255,7 +255,8 @@ labellist={ 'Home':'/top','Blog':'/','Wishlist':'https://pushy-kitty-07b.notion.
 # https://shigeblog221.com/python-flask4/
 @app.route("/top")
 def index():
-    return render_template("index.html",labellist=labellist,tags=tags_set)
+    blocks=make_page("bio")
+    return render_template("index.html",blocks=blocks,labellist=labellist,tags=tags_set)
 
 @app.route("/", methods=["GET", "POST"])
 def blog():
@@ -287,6 +288,7 @@ def tagpage(Tag):
 @app.route('/robots.txt')
 @app.route('/sitemap.xml')
 @app.route('/sitemap.txt')
+@app.route('/default.jpeg')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
