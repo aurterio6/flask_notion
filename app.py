@@ -288,7 +288,8 @@ def tagpage(Tag):
 @app.route('/robots.txt')
 @app.route('/sitemap.xml')
 @app.route('/sitemap.txt')
-@app.route('/default.jpeg')
+@app.route('/default.jpg')
+@app.route('/favicon.ico')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
