@@ -1,22 +1,12 @@
 {% extends 'base.html' %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/page.module.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog-parts.module.css') }}">
 {% endblock %}
 {% block body %}
 <div class="container">
-  <p>
-    頑張って生きているけれどSNSで発言するほどでもないのでサイトを作ってみました。
-    <br />
-    本当はエンジニアに憧れがあるので趣味の一環です。ちょっとずつ作ってみます。
-    <br />
-    今は初めてコードに触るので、いつか...
-    <br />
-    <li>コンテンツは
-      <a href="https://www.pappardelle-nono.tk/blog">こちら</a>
-      と同じですがflaskで動くよう自作しています。
-    </li>
-    <br />
-  </p>
+  <h2>自己紹介</h2>
+  {% include "content.html" %}
 </div>
 
 <div class="drag-and-drop"　style="top: 6px; left: 447px;">

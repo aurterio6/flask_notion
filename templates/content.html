@@ -1,109 +1,107 @@
-<div class="postBody">
-    {% for block in blocks %}
-        {% if block["Type"] =="paragraph" %}
-            {% if block["RichTexts"]["text"][0]["href"] == None %}
-                <p>
+{% for block in blocks %}
+    {% if block["Type"] =="paragraph" %}
+        {% if block["RichTexts"]["text"][0]["href"] == None %}
+            <p>
+            {% for text in block["RichTexts"]["text"] %}
+                {{text["plain_text"]}}
+            {% endfor %}
+            </p>
+        {% else %}
+            <p>
+                <a href={{block["RichTexts"]["text"][0]["href"]}}>
                 {% for text in block["RichTexts"]["text"] %}
                     {{text["plain_text"]}}
                 {% endfor %}
-                </p>
-            {% else %}
-                <p>
-                    <a href={{block["RichTexts"]["text"][0]["href"]}}>
-                    {% for text in block["RichTexts"]["text"] %}
-                        {{text["plain_text"]}}
-                    {% endfor %}
-                    </a>
-                </p>
-            {% endif %}                                                  
-        {% elif block["Type"] =="heading_1" %}
-            <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-                <h4>
-                {% for text in block["RichTexts"]["text"] %}
-                    {{text["plain_text"]}}
-                {% endfor %}
-                </h4>
-            </a>
-        {% elif block["Type"] =="heading_2" %}
-            <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-                <h5>                            
-                {% for text in block["RichTexts"]["text"] %}
-                    {{text["plain_text"]}}
-                {% endfor %}
-                </h5>
-            </a>
-        {% elif block["Type"] =="heading_3" %}
-            <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-                <h6>                            
-                {% for text in block["RichTexts"]["text"] %}
-                    {{text["plain_text"]}}
-                {% endfor %}
-                </h6>
-            </a>
-        {% elif block["Type"] =="bulleted_list_item" %}
-            <li>    
-                {{block["RichTexts"]["text"][0]["plain_text"]}}
-            </li>
-        {% elif block["Type"] =="numbered_list_item" %}
-            <ol>    
-                {{block["RichTexts"]["text"][0]["plain_text"]}}
-            </ol>
-        {% elif block["Type"]=="image" %}
-            <figure class="image">
-                <div>
-                <img
-                    src={{block["Image"]}}
-                    alt="画像が読み込まれない場合はページを更新してみてください。"
-                />
+                </a>
+            </p>
+        {% endif %}                                                  
+    {% elif block["Type"] =="heading_1" %}
+        <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
+            <h4>
+            {% for text in block["RichTexts"]["text"] %}
+                {{text["plain_text"]}}
+            {% endfor %}
+            </h4>
+        </a>
+    {% elif block["Type"] =="heading_2" %}
+        <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
+            <h5>                            
+            {% for text in block["RichTexts"]["text"] %}
+                {{text["plain_text"]}}
+            {% endfor %}
+            </h5>
+        </a>
+    {% elif block["Type"] =="heading_3" %}
+        <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
+            <h6>                            
+            {% for text in block["RichTexts"]["text"] %}
+                {{text["plain_text"]}}
+            {% endfor %}
+            </h6>
+        </a>
+    {% elif block["Type"] =="bulleted_list_item" %}
+        <li>    
+            {{block["RichTexts"]["text"][0]["plain_text"]}}
+        </li>
+    {% elif block["Type"] =="numbered_list_item" %}
+        <ol>    
+            {{block["RichTexts"]["text"][0]["plain_text"]}}
+        </ol>
+    {% elif block["Type"]=="image" %}
+        <figure class="image">
+            <div>
+            <img
+                src={{block["Image"]}}
+                alt="画像が読み込まれない場合はページを更新してみてください。"
+            />
+            </div>
+        </figure>
+    {% elif block["Type"]=="code" %}
+        <div class="code">
+            <pre>
+                <code>
+                    <p>{{block["Text"]["text"][0]["plain_text"]}}</p>
+                </code>
+            </pre>
+        </div>   
+    {% elif block["Type"]=="quote" %}
+        <blockquote>
+            <p> {{block["Quote"]["text"][0]["plain_text"]}} </p>
+        </blockquote>    
+    {% elif block["Type"]=="callout" %}
+        <div class="callout">
+            <div>{{block["Icon"]}}</div>
+            <div>
+                <p> {{block["RichTexts"]["text"][0]["plain_text"]}} </p>
+            </div>
+        </div>
+    {% elif block["Type"] in ["link_preview","bookmark","embed"] %}
+        <a href="{{block["Url"]}}" class="link-preview" target="_blank" rel="nofollow">
+            <div class="link-area">
+                <div class="og-image">
+                    <img src={{block["LinkPreview"]["image"]}}>
                 </div>
-            </figure>
-        {% elif block["Type"]=="code" %}
-            <div class="code">
-                <pre>
-                    <code>
-                        <p>{{block["Text"]["text"][0]["plain_text"]}}</p>
-                    </code>
-                </pre>
-            </div>   
-        {% elif block["Type"]=="quote" %}
-            <blockquote>
-                <p> {{block["Quote"]["text"][0]["plain_text"]}} </p>
-            </blockquote>    
-        {% elif block["Type"]=="callout" %}
-            <div class="callout">
-                <div>{{block["Icon"]}}</div>
-                <div>
-                    <p> {{block["RichTexts"]["text"][0]["plain_text"]}} </p>
+                <div class="descriptions">
+                <div class="og-title">
+                    {{block["LinkPreview"]["title"]}}
+                </div>
+                <div class="og-description">
+                    {{block["LinkPreview"]["description"]}}
+                </div>
                 </div>
             </div>
-        {% elif block["Type"] in ["link_preview","bookmark","embed"] %}
-            <a href="{{block["Url"]}}" class="link-preview" target="_blank" rel="nofollow">
-                <div class="link-area">
-                  <div class="og-image">
-                      <img src={{block["LinkPreview"]["image"]}}>
-                  </div>
-                  <div class="descriptions">
-                    <div class="og-title">
-                        {{block["LinkPreview"]["title"]}}
-                    </div>
-                    <div class="og-description">
-                        {{block["LinkPreview"]["description"]}}
-                    </div>
-                  </div>
-                </div>
-              </a>
-        {% elif block["Type"]=="table" %}
-            <table>
-                <tbody>
-                    <tr>
-                        テーブルは未実装 
-                    </tr>
-                </tbody>
-            </table>
-        {% elif block["Type"]=="divider" %}
-            <hr class="divider" />                                                                                                         
-        {% else %}
-            <p>未対応の書式での記述、反映されるように頑張ります</p>
-        {% endif %}
-    {% endfor %}
-</div>  
+            </a>
+    {% elif block["Type"]=="table" %}
+        <table>
+            <tbody>
+                <tr>
+                    テーブルは未実装 
+                </tr>
+            </tbody>
+        </table>
+    {% elif block["Type"]=="divider" %}
+        <hr class="divider" />                                                                                                         
+    {% else %}
+        <p>未対応の書式での記述、反映されるように頑張ります</p>
+    {% endif %}
+{% endfor %}
