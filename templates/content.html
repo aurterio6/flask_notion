@@ -17,7 +17,7 @@
         {% endif %}                                                  
     {% elif block["Type"] =="heading_1" %}
         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-            <h4>
+            <h4 class="fw-bold">
             {% for text in block["RichTexts"]["text"] %}
                 {{text["plain_text"]}}
             {% endfor %}
@@ -25,7 +25,7 @@
         </a>
     {% elif block["Type"] =="heading_2" %}
         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-            <h5>                            
+            <h5 class="fw-bold">                            
             {% for text in block["RichTexts"]["text"] %}
                 {{text["plain_text"]}}
             {% endfor %}
@@ -33,7 +33,7 @@
         </a>
     {% elif block["Type"] =="heading_3" %}
         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
-            <h6>                            
+            <h6 class="fw-bold">                            
             {% for text in block["RichTexts"]["text"] %}
                 {{text["plain_text"]}}
             {% endfor %}

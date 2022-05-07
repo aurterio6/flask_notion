@@ -40,7 +40,7 @@ for i in range(len(db["results"])):
             "LastEditedTime": db["results"][i]["last_edited_time"][:10],
             "Tags": list(map(lambda x:x["name"] ,prop["Tags"]["multi_select"])),
             "Excerpt":excerpt[0]["plain_text"] if len(excerpt)> 0 else "",
-            "OGImage":ogimege[0]["file"]["url"] if len(ogimege)> 0 else None,
+            "OGImage":ogimege[0]["external"]["url"] if len(ogimege)> 0 else None,
             "Rank": prop["Rank"]["number"]}
         tags.extend(post["Tags"])
         posts.append(post)
@@ -265,6 +265,7 @@ def blog():
     #else:
         #post_list=posts
     blocks=make_page("bio")
+    pprint(posts)
     return render_template("blog.html",labellist=labellist,posts=posts,blocks=blocks,tags=tags_set,tagname=0)
 
 @app.route("/<Slug>", methods=["GET", "POST"])
@@ -283,7 +284,8 @@ def tagpage(Tag):
     for p in range(len(posts)):
         if Tag in posts[p]["Tags"]:
             tag_page.append(posts[p])
-    return render_template("blog.html",labellist=labellist,posts=tag_page,tags=tags_set,tagname=Tag)
+    blocks=make_page("bio")
+    return render_template("blog.html",labellist=labellist,posts=tag_page,blocks=blocks,tags=tags_set,tagname=Tag)
 
 @app.route('/robots.txt')
 @app.route('/sitemap.xml')

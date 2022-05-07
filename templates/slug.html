@@ -32,25 +32,27 @@
     </div>
 
     <div class="subContent">
-        <div class="blogTagLink">
-            <h3>Posts in the same category</h3>
-            {% if not post["Tags"] %}
-                <div class="noContents">There are no contents yet</div>
-            {% else %}
-                {% for tag in post["Tags"] %}
+        <div class="p-4 mb-3 bg-light rounded">
+            <div class="blogTagLink">
+                <h3>Posts in the same category</h3>
+                {% if not post["Tags"] %}
+                    <div class="noContents">There are no contents yet</div>
+                {% else %}
+                    {% for tag in post["Tags"] %}
+                        <li key={{tag}}>
+                            <a href="/tag/{{tag}}">{{tag}}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="blogTagLink">
+                <h3>Categories</h3>
+                {% for tag in tags %}
                     <li key={{tag}}>
                         <a href="/tag/{{tag}}">{{tag}}</a>
                     </li>
                 {% endfor %}
-            {% endif %}
-        </div>
-        <div class="blogTagLink">
-            <h3>Categories</h3>
-            {% for tag in tags %}
-                <li key={{tag}}>
-                    <a href="/tag/{{tag}}">{{tag}}</a>
-                </li>
-            {% endfor %}
+            </div>
         </div>
     </div>
 </div>

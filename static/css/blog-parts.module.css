@@ -44,6 +44,14 @@
   margin:auto;
 }
 
+.bioBody {
+  padding: 0.5rem 0;
+}
+.bioBody p{
+  font-size: 0.8rem;
+  line-height: 1rem
+}
+
 .readMoreLink {
   color: var(--fg);
 }

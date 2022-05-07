@@ -7,47 +7,53 @@
 
 <div class="container">
     <div class="mainContent">
+        <h1 class="pb-4 mb-4 fst-italic border-bottom">
         {% if tagname!=0 %}
-            <h1>{{tagname}}の記事一覧</h1>
+            {{tagname}}の記事一覧
+        {% else %} ブログ記事一覧
         {% endif %}
+        </h1>
         {% for post in posts %}
-            <div class="post">
-                <div class="card">
-                    <div class="postDate">
-                        投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}
-                    </div>
-                    <div class="postDate">tags:
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success">tags:
                     {% for tag in post["Tags"] %}
-                    <a href="/tag/{{tag}}">{{tag}}</a>
+                        {{tag}}
                     {% endfor %}
-                    </div>
-                    <h3 class="postTitle">
-                        <a href="/{{post["Slug"]}}">{{post["Title"]}}</a>
-                    </h3>
-                    <div class="postExcerpt">
-                        <p>{{post["Excerpt"]}}</p>
-                    </div>
-                </div>
+                </strong>
+                <h3 class="mb-0">{{post["Title"]}}</h3>
+                <div class="mb-1 text-muted">投稿日:{{post["Date"]}} 最終更新日:{{post["LastEditedTime"]}}</div>
+                <p class="mb-auto">{{post["Excerpt"]}}</p>
+                <a href="/{{post["Slug"]}}" class="stretched-link">Continue reading</a>
             </div>
+            <div class="col-auto d-none d-lg-block">
+                {% if post["OGImage"]!=None %}
+                <img class="bd-placeholder-img img-fluid h-100" width="200" height="250" src={{post["OGImage"]}}>
+                {% else %}
+                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text style="text-anchor:middle" x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                {% endif %}
+            </div>
+        </div>
         {% endfor %}
     </div>
 
     <div class="subContent">
-        <div class="blogTagLink">
-            <h3>Categories</h3>
-            {% for tag in tags %}
-                <li key={{tag}}>
-                    <a href="/tag/{{tag}}">{{tag}}</a>
-                </li>
-            {% endfor %}
+        <div class="p-4 mb-3 bg-light rounded">
+            <div class="blogTagLink">
+                <h3>Categories</h3>
+                {% for tag in tags %}
+                    <li key={{tag}}>
+                        <a href="/tag/{{tag}}">{{tag}}</a>
+                    </li>
+                {% endfor %}
+            </div>
+            <div class="blogTagLink">
+                <h3>Biography</h3>
+            </div>
+            <div class="bioBody">
+                {% include "content.html" %}
+            </div>
         </div>
-        <div class="blogTagLink">
-            <h3>Biography</h3>
-                <div class="postBody">
-                    {% include "content.html" %}
-                </div>
-        </div>
-
     </div>
 </div>
 {% endblock %}
