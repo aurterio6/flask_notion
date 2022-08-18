@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
-<link rel="canonical" href="https://flasknotionblog.herokuapp.com/blog/{{post["Slug"]}}">
+<link rel="canonical" href="https://flasknotionblog.herokuapp.com/{{post["Slug"]}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/notion-block.module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-parts.module.css') }}">
@@ -20,7 +20,7 @@
                 {% endfor %}
                 </div>
                 <h3 class="postTitle">
-                    <a href="/blog/{{post["Slug"]}}">{{post["Title"]}}</a>
+                    <a href="/{{post["Slug"]}}">{{post["Title"]}}</a>
                 </h3>
                 <div class="postExcerpt">
                     <p>{{post["Excerpt"]}}</p>
