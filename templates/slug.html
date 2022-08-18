@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
+<link rel="canonical" href="https://flasknotionblog.herokuapp.com/blog/{{post["Slug"]}}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/notion-block.module.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-parts.module.css') }}">
