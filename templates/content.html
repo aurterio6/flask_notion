@@ -1,20 +1,16 @@
 {% for block in blocks %}
-    {% if block["Type"] =="paragraph" %}
-        {% if block["RichTexts"]["text"][0]["href"] == None %}
-            <p>
-            {% for text in block["RichTexts"]["text"] %}
+    {% if block["Type"] =="paragraph" %}      
+        <p>
+        {% for text in block["RichTexts"]["text"] %}
+            {% if text["href"] == None %}
                 {{text["plain_text"]}}
-            {% endfor %}
-            </p>
-        {% else %}
-            <p>
-                <a href={{block["RichTexts"]["text"][0]["href"]}}>
-                {% for text in block["RichTexts"]["text"] %}
+            {% else %}
+                <a href={{text["href"]}}>
                     {{text["plain_text"]}}
-                {% endfor %}
                 </a>
-            </p>
-        {% endif %}                                                  
+            {% endif %} 
+        {% endfor %}
+        </p>                                              
     {% elif block["Type"] =="heading_1" %}
         <a href="#{{block["Id"]}}" id="{{block["Id"]}}">
             <h4 class="fw-bold">
@@ -44,8 +40,10 @@
             {{block["RichTexts"]["text"][0]["plain_text"]}}
         </li>
     {% elif block["Type"] =="numbered_list_item" %}
-        <ol>    
-            {{block["RichTexts"]["text"][0]["plain_text"]}}
+        <ol>
+            <li>    
+                {{block["RichTexts"]["text"][0]["plain_text"]}}
+            </li>
         </ol>
     {% elif block["Type"]=="image" %}
         <figure class="image">
